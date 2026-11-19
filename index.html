@@ -1,31 +1,25 @@
-async function searchPart() {
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>リベット挿し依頼</title>
+</head>
+<body>
 
- const partNumber =
- document.getElementById('partNumber').value;
+<h1>リベット挿し依頼</h1>
 
- const { data, error } = await supabase
- .from('part_master')
- .select('*')
- .eq('part_number', partNumber);
+<input id="partNumber" placeholder="品番">
 
- alert(
-   JSON.stringify({
-     data:data,
-     error:error
-   })
- );
- if(error){
-   return;
- }
+<button onclick="test()">検索</button>
 
- if(data.length === 0){
+<div id="result">---</div>
 
-   document.getElementById('partName')
-   .textContent = '見つかりません';
-
-   return;
- }
-
- document.getElementById('partName')
- .textContent = data[0].part_name;
+<script>
+function test(){
+ document.getElementById('result').textContent = '動作OK';
 }
+</script>
+
+</body>
+</html>

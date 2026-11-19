@@ -1,92 +1,32 @@
-<!DOCTYPE html>
-<html lang="ja">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>リベット挿し依頼</title>
-
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
-<style>
-body{
-    font-family: sans-serif;
-    max-width:500px;
-    margin:auto;
-    padding:20px;
-}
-
-input{
-    width:100%;
-    padding:10px;
-    margin-bottom:10px;
-    box-sizing:border-box;
-}
-
-button{
-    width:100%;
-    padding:12px;
-    background:#28a745;
-    color:white;
-    border:none;
-    border-radius:5px;
-}
-
-.info{
-    background:#f0f0f0;
-    padding:10px;
-    margin-bottom:10px;
-}
-</style>
-</head>
-<body>
-
-<h2>リベット挿し依頼</h2>
-
-<input id="partNumber" placeholder="品番">
-
-<div class="info">
-品名：<span id="partName">---</span>
-</div>
-
-<input id="quantity" type="number" placeholder="数量">
-
-<input id="requester" placeholder="依頼者">
-
-<button onclick="searchPart()">品番検索</button>
-
-<script>
-const SUPABASE_URL = 'https://syenkcmxnwrfuazuaona.supabase.co';
-const SUPABASE_KEY = 'sb_publishable_ERHnwKz2S2zHXeO2LpSIIg_XO36cGqc';
-
-const supabase = window.supabase.createClient(
-  SUPABASE_URL,
-  SUPABASE_KEY
-);
-
 async function searchPart() {
 
-  const partNumber =
-    document.getElementById('partNumber').value;
+ const partNumber =
+ document.getElementById('partNumber').value;
 
-  const { data, error } = await supabase
-    .from('part_master')
-    .select('*')
-    .eq('part_number', partNumber);
+ const { data, error } = await supabase
+ .from('part_master')
+ .select('*')
+ .eq('part_number', partNumber);
 
-  if (error) {
-    alert(error.message);
-    return;
-  }
+ alert(
+   JSON.stringify({
+     data:data,
+     error:error
+   })
+ );
 
-  if (data.length === 0) {
-    document.getElementById('partName').textContent =
-      '見つかりません';
-    return;
-  }
+ if(error){
+   return;
+ }
 
-  document.getElementById('partName').textContent =
-    data[0].part_name;
+ if(data.length === 0){
+
+   document.getElementById('partName')
+   .textContent = '見つかりません';
+
+   return;
+ }
+
+ document.getElementById('partName')
+ .textContent = data[0].part_name;
 }
-</script>
-
-</body
